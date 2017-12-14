@@ -1,3 +1,11 @@
+"""
+#Reporte v1.0
+#Autor: Javier Arturo Hernández Sosa
+#Fecha: 8/Dic/2017
+#Descripcion: Crea reportes a partir de un archivo excel
+
+"""
+
 #Librerias
 import pandas as pd
 import numpy as np
@@ -10,26 +18,26 @@ from tkinter import messagebox as mb
 
 #Funciones
 def hilo():
-    '''
-    Crea un hilo para la apertura del archivo
-    '''
+    """Crea un hilo para la apertura del archivo.
+    """
     hilo1 = threading.Thread(target=leer)
     hilo1.start()
 	
 def hilo2():
-    '''
-    Crea un hilo para crear los reportes
-    '''
+    """Crea un hilo para crear los reportes.
+    """
     hilo2 = threading.Thread(target=reporte)
     hilo2.start()
     
 def cerrar():
+    """Un mensaje para manejar el cierre de la barra de progreso.
+    """
     mb.showinfo("Cargando...", "La ventana se cerrara automáticamente cuando termine la carga del archivo.")
 	
 def leer():
-    '''
-    Abre el archivo excel seleccionado
-    '''
+    """Abre el archivo excel seleccionado, crea un barra de progreso mientras se espera la carga del documento y
+    del documento leido crea las variables para el spinbox.
+    """
     #Ruta del archivo excel que se leera
     ruta = filedialog.askopenfilename(title="Abrir",filetypes = (("Fichero Excel","*.xlsx"),("Fichero Excel 97-2003","*.xls")))
     if(ruta != ''):
@@ -64,10 +72,14 @@ def leer():
         mb.showwarning('Error','Ningún archivo seleccionado')
 
 def reporte():
-    '''
-    Crear el reporte del territorio seleccionado en un archivo excel
-    Una tabla por hoja
-    '''
+    """Crea el reporte del territorio seleccionado en el spinbox dentro de un archivo excel, una tabla por hoja.
+    
+    Selecciona las columnas necesarias, con estas crea un dataframe que se manipula para poder crear el reporte 1.
+    
+    Selecciona las columnas necesarias, con estas crea un dataframe que se manipula para poder crear el reporte 2.
+    
+    Crea el archivo excel donde se guardaran los reportes.
+    """
     v1 = Toplevel(root)
     v1.title('Report v1.0')
     v1.resizable(0,0)
@@ -152,11 +164,11 @@ root.title('Report v1.0')
 root.resizable(0,0)
 root.geometry('200x200')
 
-#Botones
+#Variables globales
 territorio = None
 df = None
-	#Abrir archivo
 
+#Botones
 b1 = Button(root,text="Abrir archivo", command=hilo, width='10')
 b1.place(x=10,y=10)
 	#Seleccionar territorio
@@ -171,4 +183,6 @@ b2 = Button(root, text='Reporte', command=hilo2)
 
 #Loop Principal
 root.mainloop()
+
+
 
